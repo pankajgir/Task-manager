@@ -1,0 +1,47 @@
+
+{% extends "crdapp/base.html" %}
+{% block contant %}
+{% comment "" %}<h2>Delete task</h2>
+<p>are you sure delete task "{{ task.title}}"?</p>
+<form method="POST">
+    {% csrf_token %}
+   <button type="submit" class="btn btn-denger">yes delete</button> 
+   <a href="{% url 'task-list' %}" class="btn btn-secondary">Cancel</a>
+</form>{% endcomment %}
+<div class="text-center">
+
+<h2 class="text-danger">
+
+Delete Task
+
+</h2>
+
+<p class="lead">
+
+Are you sure you want to delete
+
+<strong>{{task.title}}</strong> ?
+
+</p>
+
+<form method="POST">
+
+{% csrf_token %}
+
+<button class="btn btn-danger">
+
+Yes Delete
+
+</button>
+
+<a href="{% url 'task-list' %}"
+class="btn btn-secondary">
+
+Cancel
+
+</a>
+
+</form>
+
+</div>
+{% endblock contant %}

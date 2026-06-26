@@ -1,0 +1,99 @@
+
+{% extends "crdapp/base.html" %}
+{% comment "" %}{% block contant %}
+<h2>All List</h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">title</th>
+      <th scope="col">discription</th>
+      <th scope="col">status</th>
+      <th scope="col">action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for t in task %}
+    <tr>
+      <td>{{t.title}}</td>
+      <td>{{t.descriptiion}}</td>
+      <td>
+        <form method="POST" action="{% url 'task-toggle' t.pk %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-sm {% if t.completed %}btn-success{% else %}btn-secondary{% endif %}">
+                {% if t.completed %}Done{% else %}NOT Done{% endif %}
+            </button>
+        </form>
+      </td>
+      <td>
+        {{t.create_date |date:"M d ,Y H:i"}}|
+      </td>
+      <td>
+        <a class="btn btn-sm btn-warning " href="{% url 'task-edit' t.pk %}">Edit</a>
+        <a class="btn btn-sm btn-denger "  href="{% url 'task-delete' t.pk %}">Delete</a>
+    </tr>
+    {% empty %}
+        <tr>
+            <td colspan="5" >no tasks availeble </td>
+        </tr>
+    {% endfor %}
+    
+    
+  </tbody>
+</table>
+{% endblock contant %}
+{% endcomment %}
+{% block contant %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+<h2 class="page-title">
+<i class="fa-solid fa-list-check"></i>
+My Tasks
+</h2>
+
+<a href="{% url 'task-crete' %}" class="btn btn-primary">
+New Task
+</a>
+
+</div>
+
+<table class="table table-hover align-middle">
+
+<thead class="table-dark">
+
+<tr>
+
+<th>Task</th>
+<th>Description</th>
+<th>Status</th>
+<th>Date</th>
+<th>Actions</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+{% for t in task %}
+<tr>
+    <td><strong>{{t.title}}</strong></td>
+    <td>{{t.descriptiion}}</td>
+    <td>
+<form method="POST" action="{% url 'task-toggle' t.pk %}">
+{% csrf_token %}
+<button class="btn btn-sm {% if t.completed %}btn-success{% else %}btn-warning{% endif %}"> {% if t.completed %} ✔ Completed {% else %} Pending {% endif %} </button>
+</form>
+</td>
+<td>{{t.create_date |date:"M d ,Y H:i"}}</td>
+<td><a class="btn btn-sm btn-primary"href="{% url 'task-edit' t.pk %}"><i class="fa-solid fa-pen"></i></a>
+<a class="btn btn-sm btn-danger"href="{% url 'task-delete' t.pk %}"><i class="fa-solid fa-trash"></i></a>
+</td>
+</tr>
+{% empty %}
+    <tr>
+        <td colspan="5" class="text-center">No Task Found</td>
+    </tr>
+     {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

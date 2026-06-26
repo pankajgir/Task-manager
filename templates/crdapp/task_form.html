@@ -1,0 +1,34 @@
+
+{% extends "crdapp/base.html" %}
+{% block contant %}
+<h2 class="page-title">
+
+{% if task %}Edit Task{% else %}Create New Task{% endif %}
+</h2>
+{% if error %}
+  <div class="text-danger small mt-1">
+    {{ error }}
+  </div>
+{% endif %}
+<form method="POST">
+{% csrf_token %}
+<div class="mb-3">
+    <label class="form-label">Task Title</label>
+    <input type="text" class="form-control form-control-lg" name="title" value="{{task.title}}">
+</div>
+    <div class="mb-4">
+        <label class="form-label">Description</label>
+        <textarea class="form-control" rows="5" name="descriptiion">{{task.descriptiion}}</textarea>
+      </div>
+        <button class="btn btn-success">Save Task</button>
+        <a href="{% url 'task-list' %}"class="btn btn-secondary">Cancel</a>
+</form>
+
+{% endblock contant %}
+
+
+
+
+
+
+
